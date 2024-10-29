@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\PeopleController;
+use App\Models\People;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -9,13 +11,6 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/somar', function (Request $request) { 
-   $soma = array_sum($request->all());
-   return response()->json([
-    'message'=> 'ok',
-    'sum' => $soma
-   ]);
-});
 
 Route::get('/somar', function (Request  $request) {
     if (count($request->all()) < 1) {
@@ -28,4 +23,12 @@ Route::get('/somar', function (Request  $request) {
         'message' => 'somado com sucesso',
         'sum' => $soma,
     ]);
+});
+ 
+Route::prefix('/people')->group(function() {
+
+    Route::get('/list',  [PeopleController::class, 'list']);
+
+    Route::post('/store', [PeopleController::class, 'store']);
+
 });
