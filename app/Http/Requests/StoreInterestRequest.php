@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Symfony\Contracts\Service\Attribute\Required;
 
-class StorePeopleRequest extends FormRequest
+class StoreInterestRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +23,8 @@ class StorePeopleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|max:255',
-            'email' => 'required|email',
-            'address' => 'required',
-            'state' => 'required|min:2|max:2',            
+            'people_id' => 'required',
+            'interest' =>   'required'
         ];
     }
 }
