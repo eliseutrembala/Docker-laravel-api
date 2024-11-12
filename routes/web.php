@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\JWTAuthController;
 use App\Http\Controllers\PeopleController;
+use App\Http\Middleware\JWTMiddleware;
 use App\Models\People;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,7 +28,7 @@ Route::get('/somar', function (Request  $request) {
     ]);
 });
  
-Route::prefix('/people')->group(function() {
+Route::prefix('/people')->middleware([JWTMiddleware::class])->group(function() {
 
     Route::get('/list',  [PeopleController::class, 'list']);
 
@@ -39,4 +40,8 @@ Route::prefix('/people')->group(function() {
 
 Route::prefix('/user')->group(function() {
     Route::post('register', [JWTAuthController::class, 'register']);
+
+    Route::post('/login', [JWTAuthController::class, 'login']);
+
+    Route::middleware([JWTMiddleware::class])->get('/logout', [JWTAuthController::class, 'logout']);
 });
